@@ -1,0 +1,99 @@
+
+<!--pages/orderConfirm/orderConfirm.wxml-->
+<view class="container">
+
+  <!--收货地址-->
+  <view class="addr-opt" bindtap="addrOptFn">
+    <view class="consignee" hidden="{{isname}}">{{name}} {{mobile}}</view>
+    <text>{{value}}</text>
+    <view class="jian"></view>
+  </view>
+
+  <!--订单详情-->
+  <view class="shop-detail " wx:for="{{items}}" data-isRegionSale="{{item.isRegionSale}}" wx:key="i" wx:for-index="idx">
+
+    <!--<image src="{{imgPath}}{{item.img?item.img:item.defauliImg}}" />-->
+    <image class="{{gray}}" src="{{img[idx]}}"></image>
+    <view class="info-wrap">
+      <text class="tit ellipsis2">{{item.name}}</text>
+      <text class="company-name ellipsis2">由 {{item.companyName}} 提供发货和售后服务</text>
+      <view class="price-info">
+       <text>{{item.norm}}</text>
+       <text class="shopqty">x{{item.qty}}</text>
+        <text class="price {{item.gray}}">¥ {{item.price}}</text>
+      </view>
+       <!-- <view class="red">{{item.tipTxt}}</view>   -->
+    </view> 
+        
+  </view>
+
+  <!--商品的总额和运费-->
+  <view class="coast">
+    <view class="total-fee">
+      <text class="shop-coast">商品金额</text>
+      <text class="shop-fee">¥{{shopprice}}</text>
+    </view>
+    <view class="freight">
+      <text class="freight-txt">运费</text>
+      <text class="freight-fee">+¥{{freightfee}}</text>
+    </view>
+    <view class="full-folding">
+      <text class="folding-txt">折扣</text>
+      <text class="folding-fee">-¥{{foldingfee}}</text>
+    </view>
+    <view class="full-cut">
+      <text class="cut-txt">优惠劵抵现金额</text>
+      <text class="cut-fee">-¥{{cutfee}}</text>
+    </view>
+    <!-- <view class="integral">
+      <text class="integral-txt">积分</text>
+      <text class="integral-fee">{{integral}}</text>
+    </view> -->
+  </view>
+
+  <!--满赠-->
+  <view class="full-gifts" hidden="{{isGift}}">
+    <text class="zeng">赠</text>
+    <view class="giftdetail">
+      <view class="giftData" wx:for="{{giftData}}" wx:key="i">
+        <text class="giftname">{{item.name}}({{item.units}})</text>
+        <text class="giftnumber">x {{item.qty}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!--优惠劵-->
+   <!-- bindtap="couponchoiceFn" -->
+  <view class="coupon-choose" >
+    <view class="choice">使用优惠劵</view>
+    <scroll-view class="coupons-con" scroll-x="true" hidden="{{iscoupon}}">
+      <view class="coupons">
+        <text>¥</text>
+        <text class="quota">{{discount}}</text>
+      </view>
+    </scroll-view>
+    <view class="couponNone" hidden="{{!iscoupon}}">{{coupontxt}}</view>
+    <!-- <view class="jiantou"></view> -->
+  </view>
+
+  <!--支付方式-->
+  <view class="pay-way" hidden="{{!isShow}}">
+    <text class="pay-txt">支付方式</text>
+    <text class="pay-wx">微信支付</text>
+  </view>
+  <view class="pay-way" hidden="{{isShow}}">
+    <text class="pay-txt">支付方式</text>
+    <text class="pay-wx">线下支付</text>
+  </view>
+
+  <!--实付金额-->
+  <view class="pay-amount">
+    <text>实付金额:<text class="pad"></text><text class="pay-fee"> ¥<text class="realfee"> {{realfee}} </text>
+      </text>
+    </text>
+  </view>
+
+  <!--支付按钮-->
+  <button class="pay-btn" hidden="{{isDisplay}}" bindtap="{{isWxpayFn}}">微信支付</button>
+   <button class="refer-btn" hidden="{{!isDisplay}}" bindtap="{{isSaveFn}}">提交订单</button> 
+</view>

@@ -1,0 +1,170 @@
+<view class="container">
+  <view class="mask" style="width:{{screenwidth}};height:{{screenheight}}" hidden="{{isMask}}"></view>
+  <view class="errorTip" class="noPosition" hidden="{{!isPosition}}">
+    <text>请授权当前位置信息</text>
+    <view bindtap="getaddressFn" class="button">点击授权</view>
+  </view>
+  <loading hidden="{{hideloading}}">加载中</loading>
+  <!-- 搜索框 -->
+       <view class='search' hidden="{{isPosition}}">
+            <input placeholder="请输入您要搜索的内容" placeholder-style="color:#e2e2e2" confirm-type="search" value="{{searchShop}}" bindinput="bindblurFn"/>
+            <button bindtap='bindSearchFn'>搜索</button>
+            <view class="search_ifier"></view>
+      </view> 
+  
+  <!--轮播-->
+  <view hidden="{{isPosition}}">
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="banner" circular="{{circular}}" hidden="{{logoHid}}">
+      <block wx:for="{{bannerImg}}" wx:key="i" data-index="index">
+        <swiper-item>
+          <image src="{{item}}" mode="scaleToFill" />
+        </swiper-item>
+      </block>
+    </swiper>
+  <!-- 九宫格  start-->
+    <view class='naver_bar'>
+          <view class='naverbarEvery' data-gonggeTitle="草籽" data-categoryId='1463' bindtap="getsearchFn">
+               <view class='gonggeImg'></view>
+               <text class='gonggeTitle'>花籽、草籽</text>
+          </view>  
+          <view class='naverbarEvery' data-gonggeTitle="菜花" data-categoryId='1464' bindtap="getsearchFn">
+               <view class='gonggeImg gongge1'></view>
+               <text class='gonggeTitle'>菜籽</text>
+          </view>
+          <view class='naverbarEvery' data-gonggeTitle="玉米种子" data-categoryId='1465' bindtap="getsearchFn">
+               <view class='gonggeImg gongge2'></view>
+               <text class='gonggeTitle'>玉米种子</text>
+          </view>
+          <view class='naverbarEvery' data-gonggeTitle="马铃薯" data-categoryId='1466' bindtap="getsearchFn">
+               <view class='gonggeImg gongge3'></view>
+               <text class='gonggeTitle'>马铃薯</text>
+          </view>
+          <view class='naverbarEvery' data-gonggeTitle="林果种苗" data-categoryId='1467' bindtap="getsearchFn">
+               <view class='gonggeImg gongge4'></view>
+               <text class='gonggeTitle'>林果种苗</text>
+          </view>
+          <view class='naverbarEvery' data-gonggeTitle="园林养护" data-categoryId='1468' bindtap="getsearchFn">
+               <view class='gonggeImg gongge5'></view>
+               <text class='gonggeTitle'>园林养护</text>
+          </view>
+          <view class='naverbarEvery' data-gonggeTitle="农资肥料" data-categoryId='1469' bindtap="getsearchFn">
+               <view class='gonggeImg gongge6'></view>
+               <text class='gonggeTitle'>农资肥料</text>
+          </view>
+          <view class='naverbarEvery' data-gonggeTitle="庭院工具" data-categoryId='1470' bindtap="getsearchFn">
+               <view class='gonggeImg gongge7'></view>
+               <text class='gonggeTitle'>庭院小工具</text>
+          </view>         
+    </view>
+  <!-- 九宫格  end-->
+  <!-- 优惠卷 start -->
+     <!-- <view class='coupon-choose' hidden="{{iscoupon}}">
+        <scroll-view class="coupons-con" scroll-x="true">
+               <view class='block' style="width:{{width}}">
+                    <view class="coupons">
+                      <view class='couponPrice'>
+                         <text>￥</text><text class="priceShu">100</text>
+                      </view>
+                      <view class='receiveConditions'>
+                           <text>消费满300元使用</text> 
+                      </view>
+                      <view class="receive_clicks" bindtap='receiveCoupon'>
+                      </view>
+                    </view>
+                    <view class="coupons">
+                      <view class='couponPrice'>
+                         <text>￥</text><text class="priceShu">100</text>
+                      </view>
+                      <view class='receiveConditions'>
+                           <text>消费满300元使用</text> 
+                      </view>
+                      <view class="receive_clicks">
+                      </view>
+                    </view>
+                    <view class="coupons">
+                      <view class='couponPrice'>
+                         <text>￥</text><text class="priceShu">100</text>
+                      </view>
+                      <view class='receiveConditions'>
+                           <text>消费满300元使用</text> 
+                      </view>
+                      <view class="receive_clicks">
+                      </view>
+                    </view>
+                    
+               </view>
+        </scroll-view>
+    </view>  -->
+  <!-- 优惠卷 end -->
+  <!-- 商品列表 start -->
+  <view class="shop_min">
+     <view class="recommend">
+        — 热门推荐 —
+     </view>
+     <view class="shop_lists">
+         <view class="lists_every" wx:for="{{shopsData}}" wx:key="i" bindtap="shopdetailFn" data-index="{{index}}">
+              <view class="everyImg">
+                   <image src="{{imgPath + item.defaultImg}}" mode="aspectFit" bindtap="orderDetailFn"></image>
+              </view>
+              <view class="shop_content">
+                  <view class='shopName'>【{{item.brand}}】{{item.onlineTitle}}</view>
+                  <text class="price">
+              <text class="priceSmall" wx:if="{{item.price!=0}}">¥</text>{{item.price==0?'价格待定':item.price}} 
+              </text>
+              </view>
+         </view>
+     </view>
+  </view>
+  <!-- 商品列表 end -->
+
+ 
+    <!--全部商品列表-->
+     <!-- <view hidden="{{search}}">
+      <view class="shoplist" wx:for="{{shopsData}}" wx:key="i" bindtap="shopdetailFn" data-index="{{index}}">
+        <view class="touming" style="z-index:{{prior}}"></view>
+        <view class="img"> -->
+
+
+          <!--<image src="{{imgPath}}{{item.img?item.img:item.defauliImg}}" /> 本身已注销-->
+
+
+          <!-- <image src="{{imgPath + item.defaultImg}}" mode="aspectFit" bindtap="orderDetailFn"></image>
+        </view>
+        <view class="shopdetail">
+          <text class="shopname ellipsis2">【{{item.brand}}】 {{item.onlineTitle}}</text>
+          <view class="shopprice ellipsis" hidden="{{isPrice}}"> -->
+
+
+            <!-- <text class="price">{{item.price==0?'价格待定':'¥'+item.price+'起'}}</text> 本身已注销-->
+
+
+            <!-- <text class="price">
+              <text class="priceSmall {{item.price==0? 'hide' : 'show'}}">¥</text>{{item.price==0?'价格待定':item.price}} <text class="priceSmall {{item.price==0? 'hide' : 'show'}}">起</text></text>
+          </view>
+        </view>
+      </view>
+    </view>  -->
+
+
+    <!--无搜索商品时-->
+    <!-- <view class="shopnone" hidden="{{isSearch}}">抱歉，未找到您要搜索的商品！</view> -->
+    <view class="shopnone" hidden="{{noShoplist}}">抱歉, 该地区暂无商品信息！</view>
+
+    <!--加载中-->
+    <view class="load" hidden="{{iscome}}">
+      <view class="loadstyle" hidden="{{dot}}">
+        <text class="loadding">加载中</text>
+        <view class="change">
+          <view class="{{dotclass[0]}}"></view>
+          <view class="{{dotclass[1]}}"></view>
+          <view class="{{dotclass[2]}}"></view>
+        </view>
+      </view>
+      <view class="loadover" hidden="{{!dot}}">
+        <view class="left"></view>
+        <text>无更多商品</text>
+        <view class="right"></view>
+      </view>
+    </view>
+  </view>
+</view>

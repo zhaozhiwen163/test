@@ -1,0 +1,30 @@
+<view class="container">
+  <view hidden="{{isNone}}">
+    <view class="shopping-list" wx:for="{{orderData}}" wx:key="i">
+
+      <!--{{item.img ? item.img : item.defauliImg}}-->
+      <image src="{{imgPath+item.goodsImg}}" mode="aspectFit" bindtap="orderDetailFn"></image>
+      <view class="info-wrap">
+        <text class="tit ellipsis">{{item.brand}}{{item.name}}</text>
+        <view class="price-info">
+          <text>{{item.specData}}</text>
+          <text class="price">¥{{item.shopprice}}</text>
+        </view>
+        <view class="operation">
+          <text data-cartid="{{item.skuId}}" class="decr-btn" bindtap="decrFn">-</text>
+          <input class="operation-result" value="{{item.moq}}" type="number" bindblur="goodsNumFn" data-id="{{item.skuId}}" />
+          <text data-cartid="{{item.skuId}}" hover-class="hover" class="incr-btn" bindtap="incrFn">+</text>
+        </view>
+        <view class="bought">{{item.qty}}{{item.specunits}}起订购</view>
+      </view>
+      <text class="del-order" bindtap="removeFn" data-cartid="{{item.skuId}}"></text>
+    </view>
+  </view>
+  <view hidden="{{!isNone}}" class="shoppingNone">
+    <text class="shopnone" bindtap="noneFn">购物车里什么也没有，快去购物吧！</text>
+  </view>
+  <view class="footBar">
+    <view class="totail-price" bindtap="sumcalcFn">合计¥{{totalPrice}}</view>
+    <button type="warn" class="settlement-btn" disabled="{{isOrder}}" bindtap="settlementFn">去结算</button>
+  </view>
+</view>
